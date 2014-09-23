@@ -1,0 +1,29 @@
+Circulation Module
+------------------
+
+Dealing with Patrons
+~~~~~~~~~~~~~~~~~~~
+	-Searching, Registering, Updating
+	-Patron Alerts, Notes
+	-Merging Patron Records
+	-Deleting Patron Records
+
+Dealing with Items
+~~~~~~~~~~~~~~~~~
+	-Check out, Check In, Renewing (editing due date)
+	-Marking Item Lost, Claimed Returned/Never Checked Out
+	
+	-Going through the Item Status Screen
+		-Checking multiple items, Loading text list
+		-Editing items from Item Status (link to Cataloging)
+		
+Dealing with Holds
+~~~~~~~~~~~~~~~~~
+	-Placing, Managing, Capturing, Find Another Target
+		-Holds Pull List, Holds Shelf List, Clear Shelf List
+
+Dealing with Transits
+~~~~~~~~~~~~~~~~~~~~
+	-When does the Status Change? How to receive an In Transit Item?
+	-Checking Transit List
+	-Canceling Transits

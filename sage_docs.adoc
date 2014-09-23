@@ -1,0 +1,26 @@
+Sage Evergreen Documentation
+============================
+Beth Longwell <blongwel@eou.edu>; Brent Mills <brent@hoodriverlibrary.org>
+:toc:
+:icons:
+:numbered:
+
+include::introduction.adoc[]
+
+include::module_overview.adoc[]
+
+include::getting_started.adoc[]
+
+include::circulation_module.adoc[]
+
+include::cataloging_module.adoc[]
+
+include::opac.adoc[]
+
+include::administration.adoc[]
+	
+More.... 
+^^^^^^^^
+CAUTION: What Else to add?
+
+// Command to Generate HTML for the "Sage" Look (example): asciidoctor -a toc2 -a data-uri -a icons -a linkcss -a stylesheet=foundation-lime.css -a stylesdir=~/asciidoctor-stylesheet-factory/stylesheets sample.ascidoc //

@@ -1,0 +1,46 @@
+Cataloging Module
+-----------------
+
+Searching the OPAC/Catalog
+~~~~~~~~~~~~~~~~~~~~~~~~~
+	-Advanced/Numeric Search
+	-MARC Expert Search
+	-Z39.50 Search/Comparison with Catalog
+	
+Adding Holdings to Existing Sage Records
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		-Adding Items to title records
+		-Targeting Holds with New Items
+		-Adding holdings for non-physical/electronic resources
+		
+Editing/Maintaining Sage Holdings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	-Necessary Permission Level
+	-Copy Editor/Edit Item Attributes/Item Status(link from Circ)
+	-Using Item/Copy Templates
+		-Saving locally, modifying 
+		-Exporting/Importing
+	-Batch Update Items
+		-Item Status/Copy Buckets(link)
+			-Deleting/Modifying
+	-Transfer Holdings to a New Record
+	-Deleting Holdings
+		-Records
+		-Volumes
+		-Copy/Item Level
+	-Replacing Barcodes
+	-Adding Bibliographic Records to Sage
+		-Necessary Permission Level
+		-MARC imports via Z39.50
+		-MARC Batch Import/Export
+		-Sage’s Minimum MARC record
+		-Creating New MARC records (original cataloging)
+		-Cataloging Non-Physical Items (link)
+	-Using The MARC Editor
+		-Editing Overview
+		-OPAC Icons/Facet Search Fields (999 fields)
+		-Merging Bib Records in Evergreen
+		-Deleting MARC Records
+	-Copy Alerts
+	-Copy Buckets
+	-Record Buckets

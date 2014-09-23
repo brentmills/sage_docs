@@ -1,0 +1,6 @@
+Getting Started
+---------------
+	Logging in to Evergreen
+	Setting up a Workstation
+		-Configuring Receipt Templates
+		-Configuring Receipt Printers

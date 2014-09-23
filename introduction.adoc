@@ -1,0 +1,4 @@
+Introduction to Evergreen
+-------------------------
+	Give a quick introduction to the System, what we run on, who makes up Sage/Evergreen,etc...
+	Evergreen is an Open Source Integrated Library System (ILS) that the Sage Consortium uses to 
