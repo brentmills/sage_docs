@@ -18,6 +18,8 @@ include::cataloging_module.adoc[]
 include::opac.adoc[]
 
 include::administration.adoc[]
+
+include::RELEASE_NOTES_2_5.txt[]
 	
 More.... 
 ^^^^^^^^

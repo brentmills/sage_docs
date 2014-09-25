@@ -7,7 +7,7 @@
 <meta name="generator" content="Asciidoctor 1.5.0">
 <meta name="author" content="Beth Longwell, Brent Mills">
 <title>Sage Evergreen Documentation</title>
-<link rel="stylesheet" href="/Users/bmills/Dropbox/sage.eou.edu/asciidoctor-stylesheet-factory/stylesheets/foundation-lime.css">
+<link rel="stylesheet" href="/Users/bmills/Dropbox/sage_docs/asciidoctor-stylesheet-factory/stylesheets/foundation-lime.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -50,6 +50,12 @@
 <li><a href="#_editing_adding_book_cover_jackets">7.6. Editing/Adding Book Cover Jackets</a></li>
 </ul>
 </li>
+<li><a href="#_evergreen_2_5_release_notes">8. Evergreen 2.5 Release Notes</a>
+<ul class="sectlevel2">
+<li><a href="#_modules">8.1. Modules</a></li>
+<li><a href="#_new_features">8.2. New Features</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -59,9 +65,30 @@
 <div class="sectionbody">
 <div class="literalblock">
 <div class="content">
-<pre>Give a quick introduction to the System, what we run on, who makes up Sage/Evergreen,etc...
-Evergreen is an Open Source Integrated Library System (ILS) that the Sage Consortium uses to</pre>
+<pre>Evergreen is an Open Source Integrated Library System (ILS) used by the Sage Library Consortium.</pre>
 </div>
+</div>
+<div class="ulist">
+<div class="title">Sage Staff include:</div>
+<ul>
+<li>
+<p>Systems Manager: <a href="mailto:blongwel@eou.edu">Beth Longwell</a><br></p>
+</li>
+<li>
+<p>Systems Librarian: <a href="mailto:brent@hoodriverlibrary.org">Brent Mills</a><br></p>
+</li>
+<li>
+<p>Cataloging Specialist: <a href="mailto:sagecat@bakerlib.org">David Sale</a><br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Feel free to contact Beth or Brent in regards to general Evergreen issues
+(connectivity/troubleshooting/functionality). David is available for cataloging related questions for the
+Evergreen installation and other, broader cataloging related questions.</p>
+</div>
+<div class="paragraph">
+<p>This Documentation repository is built with <a href="http://www.methods.co.nz/asciidoc/">AsciDocs</a> and is based heavily upon the available official documention for the <a href="http://docs.evergreen-ils.org/">Evergreen ILS</a> as well as <a href="http://docs.sitka.bclibraries.ca/Sitka/current/html/">Sitka Library Consortium&#8217;s</a> available documention. If you believe any information to be in error, or wish to see other sections further described, please get in contact with Beth or Brent.</p>
 </div>
 </div>
 </div>
@@ -279,8 +306,1395 @@ Setting up a Workstation
 -Editing incorrect/missing book jacket in catalog</pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_evergreen_2_5_release_notes">8. Evergreen 2.5 Release Notes</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_modules">8.1. Modules</h3>
 <div class="sect3">
-<h4 id="_more">7.6.1. More&#8230;&#8203;.</h4>
+<h4 id="_circulation">8.1.1. Circulation</h4>
+<div class="sect4">
+<h5 id="__strong_long_overdue_circulations_management_strong"><strong>Long Overdue Circulations Management</strong></h5>
+<div class="paragraph">
+<p>If you are using a custom version of the
+<em>/openils/conf/action_trigger_filters.json.example</em> file, you will need to
+merge the changes made by this feature into your file.  The change in
+question alters the <em>checkout.due</em> hook such that LONGOVERDUE circulations
+are no longer treated as regular overdue items.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_opac_2">8.1.2. OPAC</h4>
+<div class="sect4">
+<h5 id="__strong_web_based_patron_self_registration_strong"><strong>Web-Based Patron Self-Registration</strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>If a value is set for the <em>Patron Self-Reg Expire Interval</em>
+(opac.pending_user_expire_interval) for any org units, the new
+/openils/bin/purge_pending_users.srfsh script should also be added to the
+opensrf user&#8217;s crontab.  Running the script once per day should suffice.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_miscellaneous">8.1.3. Miscellaneous</h4>
+<div class="sect4">
+<h5 id="__strong_log_redaction_config_change_strong"><strong>Log Redaction Config Change</strong></h5>
+<div class="paragraph">
+<p>The previous log protect redaction instructions missed a method used
+by the patron initiated password reset system.  In order to fill this
+gap, you need to find the &lt;log_protect&gt; portion of your
+opensrf_core.xml file and add the following line:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;match_string&gt;open-ils.actor.patron.password_reset.commit&lt;/match_string&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see a number of similar lines already there in between
+&lt;log_protect&gt; and &lt;/log_protect&gt;.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_server_add_ons_strong"><strong>Server Add-ons</strong></h5>
+<div class="paragraph">
+<p>This adds a "Server Add-ons" menu entry under Admin &#8594; Workstation
+Administration in the staff client.  Choosing this allows you to edit or set a
+list of identifiers that correspond to JSAN-style modules found in
+/server/addons/, and is meant mainly for activating 3rd party modules within the
+staff client on a per-workstation basis.  You need the
+ADMIN_SERVER_ADDON_FOR_WORKSTATION permission to use it.</p>
+</div>
+<div class="paragraph">
+<p>Configuration options for activated add-ons may also show up in this interface.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_new_features">8.2. New Features</h3>
+<div class="sect3">
+<h4 id="_administration">8.2.1. Administration</h4>
+<div class="sect4">
+<h5 id="__strong_default_filter_option_for_configuration_screens_strong"><strong>Default filter option for configuration screens</strong></h5>
+<div class="paragraph">
+<p>By default, most admin configuration screens in the staff client will now
+include filters allowing staff to display just those items matching a certain
+criteria.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_upgrade_notes_idl2js_locale_support_strong"><strong>Upgrade Notes : IDL2js Locale Support</strong></h5>
+<div class="paragraph">
+<p>The following Apache configuration changes are required to support the
+locale-aware IDL2js module.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash"># file: eg_vhost.conf
+
+# this is the new part
+# capture locale CGI param for /reports/fm_IDL.xml
+RewriteCond %{REQUEST_URI} ^/reports/fm_IDL.xml
+RewriteCond %{QUERY_STRING} locale=([^&amp;;]*)
+RewriteRule . - [E=locale:%1]
+
+# it should be placed just above this existing config section
+&lt;LocationMatch /reports/fm_IDL.xml&gt;
+    IDLChunkStripPI "yes"
+    IDLChunkEscapeScript "no"
+    IDLChunkStripComments "yes"
+    IDLChunkStripDoctype "yes"
+    IDLChunkContentType "application/xml; charset=utf-8"
+    AddOutputFilter INCLUDES;IDLCHUNK .xml
+&lt;/LocationMatch&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_inter_authority_linking_script_strong"><strong>Inter-authority linking script</strong></h5>
+<div class="paragraph">
+<p>Adds a script called authority_authority_linker.pl in support-scripts that,
+when run, will link authority reference headings to authority records that
+contain the same main entry using a subfield 0. This causes triggers to fill
+up the authority-authority linking table and allows more information to appear
+in the bib/authority browse when a displayed heading comes from an authority
+record that has linked <em>See Also</em> references.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_new_updates_tools_strong"><strong>New Updates Tools</strong></h5>
+<div class="paragraph">
+<p>Source code for tools to generate the staff clients updates tools were
+added to Open-ILS/xul/staff_client/external/libmar.  These tools
+replace the downloadable tools from Mozilla.org that were previously
+used to generate the staff client updates files.</p>
+</div>
+<div class="paragraph">
+<p>They come with their own configuration script and are configured
+automatically as a subpackage when you configure Evergreen for
+installation.  They are also built and ready for use when you make
+Evergreen during the installation or upgrade process.</p>
+</div>
+<div class="paragraph">
+<p>The make_updates.sh script that is run when you tell Evergreen to make
+the staff client updates has been modified to use the new tools.</p>
+</div>
+<div class="paragraph">
+<p>These tools introduce a dependency on libbz2.  This is often only
+available when installing the libbz2-dev or libbz2-devel packages.
+Thus this branch introduces a new dependency on the development packages
+for libbz2 in Evergreen.</p>
+</div>
+<div class="paragraph">
+<p>Nothing in the user facing behavior of building updates changes with
+these tools.  They are drop-in replacements for the previous tools and
+other than the new dependency on libbz2, you don&#8217;t even need to know
+that they are there.</p>
+</div>
+<div class="paragraph">
+<p>These tools were added to Evergreen to be an aid in portability to
+operating systems other than Linux.  They also remove a dependency on
+a third-party tool, that is typically downloaded as a binary.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_phonelist_pm_module_strong"><strong>Phonelist.pm Module</strong></h5>
+<div class="paragraph">
+<p>PhoneList.pm is a mod_perl module for Apache that works with Evergreen
+to generate callings lists for patron holds. It outputs a csv file
+that can be fed into an auto-dialer script to call patrons with little
+or no staff intervention.  It is accessed and configured via a special
+URL and passing any parameters as a &#8220;Query String&#8221; on the URL.  The
+parameters are listed in the table below.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Parameters for the phonelist program:</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Your Evergreen login. Typically your library&#8217;s circ account. If you leave this off, you will be prompted to login.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">passwd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password for your Evergreen login. If you leave this off you will be prompted to login.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ws_ou</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ID of the system or branch you want to generate the list for (optional). If your account does not have the appropriate permissions for the location whose ID number you have entered, you will get an error.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">skipemail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If present, skip patrons with email notification (optional).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">addcount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add a count of items on hold (optional). Only makes sense for holds.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">overdue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Makes a list of patrons with overdues instead of holds. If an additional, numeric parameter is supplied, it will be used as the number of days overdue. If no such extra parameter is supplied, then the default of 14 days is used.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The URL is</p>
+</div>
+<div class="paragraph">
+<p><code>https://your.evergreen-server.tld/phonelist</code></p>
+</div>
+<div class="paragraph">
+<p>A couple of examples follow:</p>
+</div>
+<div class="paragraph">
+<p><code>https://your.evergreen-server.tld/phonelist?user=circuser&amp;passwd=password&amp;skipemail</code></p>
+</div>
+<div class="paragraph">
+<p>The above example would sign in as user circuser with password of
+&#8220;password&#8221; and get a list of patrons with holds to call who do not
+have email notification turned on. It would run at whatever branch is
+normally associated with circuser.</p>
+</div>
+<div class="paragraph">
+<p><code>https://your.evergreen-server.tld/phonelist?skipemail</code></p>
+</div>
+<div class="paragraph">
+<p>The above example would do more or less the same, but you would be
+prompted by your browser for the user name and password.</p>
+</div>
+<div class="paragraph">
+<p>If your browser or download script support it, you may also use
+conventional HTTP authentication parameters.</p>
+</div>
+<div class="paragraph">
+<p><code>https://user:password@your.evergreen-server.tld/phonelist?overdue&amp;ws_ou=2</code></p>
+</div>
+<div class="paragraph">
+<p>The above logs in as &#8220;user&#8221; with &#8220;password&#8221; and runs overdues for location ID 2.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_purge_holds_strong"><strong>"Purge Holds"</strong></h5>
+<div class="paragraph">
+<p>Similar to purging circulations one may wish to purge old (filled or canceled) hold information. This feature adds a database function and settings for doing so.</p>
+</div>
+<div class="paragraph">
+<p>Purged holds are moved to the action.aged_hold_request table with patron identifying information scrubbed, much like circulations are moved to action.aged_circulation.</p>
+</div>
+<div class="paragraph">
+<p>The settings allow for a default retention age as well as distinct retention
+ages for holds filled, holds canceled, and holds canceled by specific cancel
+causes. The most specific one wins unless a patron is retaining their hold history. In the latter case the patron&#8217;s holds are retained either way.</p>
+</div>
+<div class="paragraph">
+<p>Note that the function still needs to be called, which could be set up as a cron job or done more manually, say after statistics collection. A new script, purge_holds.srfsh, is added that can be used to purge holds from cron.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_action_trigger_event_repeatability_strong"><strong>Action Trigger Event Repeatability</strong></h5>
+<div class="paragraph">
+<p>Action Trigger Event Definitions have a new field, "Event Repeatability
+Delay". This feature allows events to be repeated after the designated
+delay interval. An example of this is sending a notification email when a
+patron&#8217;s library card expires. If the library extends the expiration date
+on that card, we then need a way to send another notification email when
+that same card expires again. Before, the Action Trigger processor only
+created a new event if the event definition for that target had never
+been run before. But now it allows repeating of the event after the delay
+interval, if present.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cataloging">8.2.2. Cataloging</h4>
+<div class="sect4">
+<h5 id="__strong_vandelay_item_import_defaults_strong"><strong>Vandelay Item Import Defaults</strong></h5>
+<div class="paragraph">
+<p>Via the Library Settings Editor (Org Unit Settings), support auto-generation of
+call numbers and barcodes for items imported via the staff client&#8217;s MARC Batch
+Import interface (a.k.a. Vandelay).  Support settings for applying a local
+prefix string to auto-generated call numbers and barcodes.  For both, the
+prefix defaults to "VAN".</p>
+</div>
+<div class="paragraph">
+<p>Similarly, support default copy location and circ modifiers.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<img src="data:image/png;base64,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" alt="Tip">
+</td>
+<td class="content">
+New Library Settings
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Vandelay Generate Default Barcodes (vandelay.item.barcode.auto)</p>
+</li>
+<li>
+<p>Vandelay Default Barcode Prefix (vandelay.item.barcode.prefix)</p>
+</li>
+<li>
+<p>Vandelay General Default Call Numbers (vandelay.item.call_number.auto)</p>
+</li>
+<li>
+<p>Vandelay Default Call Number Prefix (vandelay.item.call_number.prefix)</p>
+</li>
+<li>
+<p>Vandelay Default Copy Location (vandelay.item.copy_location.default)</p>
+</li>
+<li>
+<p>Vandelay Default Circulation Modifier (vandelay.item.circ_modifier.default)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_z39_50_batch_search_and_queue">Z39.50 Batch Search and Queue</h5>
+
+</div>
+<div class="sect4">
+<h5 id="__strong_staff_work_flow_strong"><strong>Staff Work Flow</strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Staff add records to bib record buckets</p>
+</li>
+<li>
+<p>Staff select the new "Locate Z39.50 Matches" action for a selected bucket.</p>
+</li>
+<li>
+<p>Staff choose which Z39.50 sources and indexes to search and the destination
+queue.</p>
+</li>
+<li>
+<p>Submitting the search fires a series of parallel Z39.50 searches across
+all selected Z39.50 sources.</p>
+</li>
+<li>
+<p>Matches are added to the selected (Vandelay) queue.</p>
+</li>
+<li>
+<p>Matched records may be manually or automatically overlaid to existing
+catalog records using the existing Vandelay import/merge/overlay features.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_vandelay_limit_to_bucket_strong"><strong>Vandelay Limit to Bucket</strong></h5>
+<div class="paragraph">
+<p>As a side effect of this feature, Vandelay now has a new option in the
+interface which allows staff to limit which catalog records to which an
+inbound record matches to bib records within a record bucket.  When a record
+bucket and match set are chosen, only the records in the bucket can act as
+merge/overlay targets for the inbound Vandelay records.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_server_admin_settings_strong"><strong>Server Admin Settings</strong></h5>
+<div class="paragraph">
+<p><em>Z39.50 Index Field Maps</em> can be used to map bib record
+indexes (Metabib Fields and Record Attributes) to Z39.50
+search attributes.  The purpose of the mapping is to allow the server to
+determine which values to use for the automated Z39.50 searches.  For example,
+if the Z39.50 "title" attribute is mapped to the "Uniform Title" Metabib Field,
+the extracted value for "Uniform Title" for each record in the bucket will be
+used as the "title" value in the Z39.50 search.</p>
+</div>
+<div class="paragraph">
+<p>Mappings can be applied to specific Z39.50 attributes, which define an attribute
+type and a Z39.50 source, or to generic attribute types (e.g. "title").  When
+a specific attribute is used, the mapping will only be applied to searches
+directed at the Z39.50 source linked to the attribute.</p>
+</div>
+<div class="paragraph">
+<p>The management interface can be found in the staff client under</p>
+</div>
+<div class="paragraph">
+<p>Admin &#8658; Server Administration &#8658; Z39.50 Index Field Maps</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_metabib_field_additions_strong"><strong>Metabib Field Additions</strong></h5>
+<div class="paragraph">
+<p>Stock config.metabib_field entries for author include additional author-
+related data, like dates.  For example, a value for Personal Author might
+look like this:</p>
+</div>
+<div class="paragraph">
+<p><em>girdlestone cuthbert morton 1895 1975 creator</em></p>
+</div>
+<div class="paragraph">
+<p>In the context of searching Z39.50 servers, the extraneous data can be
+detrimental.  Creating a separate field definition without the extra data
+is recommended.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sql" data-lang="sql">INSERT INTO config.metabib_field
+    (field_class, name, label, format, xpath, search_field)
+    VALUES (
+        'author',
+        'personal - trimmed',
+        'Personal Author (trimmed)',
+        'mods32',
+        '//mods32:mods/mods32:name[@type=''personal'' and mods32:role/mods32:roleTerm[text()=''creator'']]/mods32:namePart[not (@type)]',
+        FALSE
+    );
+
+-- FULL BIB (OR INDEX-TARGETED) RE-INGEST REQUIRED</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_library_settings_strong"><strong>Library Settings</strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Maximum Parallel Z39.50 Batch Searches (cat.z3950.batch.max_parallel)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The maximum number of Z39.50 searches that can be in-flight at any given
+time when performing batch Z39.50 searches</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Maximum Z39.50 Batch Search Results (cat.z3950.batch.max_results)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The maximum number of search results to retrieve and queue for each
+record + Z39 source during batch Z39.50 searches</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_circulation_2">8.2.3. Circulation</h4>
+<div class="sect4">
+<h5 id="__strong_patron_barcode_regex_for_patron_registration_strong"><strong>Patron barcode regex for patron registration</strong></h5>
+<div class="paragraph">
+<p>A new library setting is available to set a barcode regex to be checked during
+patron registration.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_setting_for_desk_renewal_to_use_original_circulating_library_strong"><strong>Setting for Desk Renewal to use original circulating library</strong></h5>
+<div class="paragraph">
+<p>A new global flag option has been added to allow the circulating library of
+a desk renewal (a.k.a. a renewal using the staff client) to reuse the original
+circulation library for circ rule behaviors rather than using the workstation.
+This new setting is similar to existing options to use the originating
+circulation library in OPAC renewals.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_library_setting_to_disable_patron_credit_strong"><strong>Library Setting to Disable Patron Credit</strong></h5>
+<div class="paragraph">
+<p>A new library setting is available to disable patron credit payments in the
+billing interface. When enabled, the setting will:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Disallow patron_credit payments in the payment API.</p>
+</li>
+<li>
+<p>Hide all of the patron credit payment actions in the staff client patron
+payment interface.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_option_to_disallow_use_of_a_branch_as_a_pickup_library_for_holds_strong"><strong>Option to Disallow Use of a Branch as a Pickup Library for Holds</strong></h5>
+<div class="paragraph">
+<p>A new library setting is available to remove a branch from consideration as a
+hold pickup library. This setting only affects the OPAC pickup library selector
+and does not otherwise affect the display of the branch in the OPAC. It also
+has no effect on hold targeting / capturing.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_floating_groups_strong"><strong>Floating Groups</strong></h5>
+<div class="paragraph">
+<p>In previous versions of Evergreen, floating group copies could float or not. If they floated, then they floated everywhere with no restrictions.</p>
+</div>
+<div class="paragraph">
+<p>This enhancement provides an interface to define where a copy will float by assigning it to a floating group.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_long_overdue_circulations_management_strong_2"><strong>Long Overdue Circulations Management</strong></h5>
+<div class="paragraph">
+<p>This is a two-part feature, which covers marking circulations as long
+overdue via automated processing and check-in of long overdue circulations.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_marking_circulations_long_overdue_strong"><strong>Marking Circulations Long Overdue</strong></h5>
+<div class="paragraph">
+<p>A new Action/Trigger reactor (MarkItemLongOverdue) and sample event
+definition (6 Month Overdue Mark Long-Overdue) are included for
+marking circulations and their associated copies as long overdue.  New Library
+Settings (Org Unit Settings) determine whether the item price and/or a
+processing fee is applied.</p>
+</div>
+<div class="paragraph">
+<p>A secondary Action/Trigger hook (longoverdue.auto) and sample event
+definition (6 Month Long Overdue Notice) are added so that (email, etc.)
+notifications can be sent when a circulation is marked long overdue via
+this new automated process.</p>
+</div>
+<div class="paragraph">
+<p>Also included is a new Action/Trigger validator PatronNotInCollections, which
+can be used to prevent long overdue processing (or any circ-based event
+definition) for patrons that are in collections processing at (or above) the
+circulating library.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_check_in_of_long_overdue_circulations_strong"><strong>Check-in of Long Overdue Circulations</strong></h5>
+<div class="paragraph">
+<p>Check-in of long overdue items may result in any of the following actions,
+depending on configuration.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Void the copy price billing</p>
+</li>
+<li>
+<p>Void the long-overdue processing fee billing</p>
+</li>
+<li>
+<p>Reinstate voided overdue fines</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The process is practically identical to Lost processing.  However, one
+difference between Lost and Long Overdue check-in is that the window
+of time during which a long overdue item may be returned may be based on the
+due date (like Lost) or the last billing activity date (last payment, last
+billing).  This is controlled with the "Long-Overdue Check-In Interval Uses
+Last Activity Date" Library Setting.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_new_library_settings_strong"><strong>New Library Settings</strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Long-Overdue Materials Processing Fee</p>
+</li>
+<li>
+<p>Void Overdue Fines When Items are Marked Long-Overdue</p>
+</li>
+<li>
+<p>Leave transaction open when long overdue balance equals zero</p>
+</li>
+<li>
+<p>Long-Overdue Items Usable on Checkin</p>
+</li>
+<li>
+<p>Long-Overdue Max Return Interval</p>
+</li>
+<li>
+<p>Restore Overdues on Long-Overdue Item Return</p>
+</li>
+<li>
+<p>Void Long-Overdue Item Billing When Returned</p>
+</li>
+<li>
+<p>Void Processing Fee on Long-Overdue Item Return</p>
+</li>
+<li>
+<p>Long-Overdue Check-In Interval Uses Last Activity Date</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A combination of <em>Charge lost on zero</em> and <em>Default Item Price</em> are used to
+determine the amount to charge for the item price when a circulation is
+marked as long overdue.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_new_billing_types_strong"><strong>New Billing Types</strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Long-Overdue Materials</p>
+</li>
+<li>
+<p>Long-Overdue Materials Processing Fee</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_new_permissions_strong"><strong>New Permissions</strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>SET_CIRC_LONG_OVERDUE</p>
+</li>
+<li>
+<p>COPY_STATUS_LONGOVERDUE.override</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_new_copy_status_strong"><strong>New Copy Status</strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Long Overdue</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_patron_blocking_by_lost_items_and_include_lost_as_items_out_strong"><strong>Patron blocking by lost items and include lost as items out</strong></h5>
+<div class="paragraph">
+<p>This feature has two main parts, both of which are to improve the staff&#8217;s
+ability to assist patrons in regards to lost items.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Patron blocking by lost items.  This will add a group penalty threshold
+that will alert staff when a patron has too many lost items.  This
+setting is modified through the Group Penalty Thresholds page.</p>
+</li>
+<li>
+<p>Include lost items as items out.  Through a new Library Setting,
+<em>Include Lost circulations in lump sum tallies in Patron Display</em>,
+the staff have the ability to determine if lost items will be included
+in items out.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_long_overdue_patron_standing_penalty_strong"><strong>Long-Overdue Patron Standing Penalty</strong></h5>
+<div class="paragraph">
+<p>This is the long-overdue version of the existing PATRON_EXCEEDS_LOST_COUNT
+standing penalty.  When a patron exceeds the configured threshold for open
+long-overdue (i.e. non-zero balance) circulations, the penalty is applied.
+When the number once again goes below the threshold, the penalty is removed.</p>
+</div>
+<div class="paragraph">
+<p>The penalty name is PATRON_EXCEEDS_LONGOVERDUE_COUNT / "Patron Exceeds Max
+Long-Overdue Threshold"</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_per_hold_behind_desk_setting_strong"><strong>Per-Hold Behind Desk Setting</strong></h5>
+<div class="paragraph">
+<p>The value for behind-the-desk pickup is now stored directly on each
+hold request.  This allows the system to better track the true location
+of captured hold items in cases where the patron setting has changed since
+hold capture.</p>
+</div>
+<div class="paragraph">
+<p>For these features to be accessible, the "Behind Desk Pickup Supported"
+(circ.holds.behind_desk_pickup_supported) Library Setting must be set
+to true.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_staff_client_strong"><strong>Staff Client</strong></h5>
+<div class="paragraph">
+<p>In addition to the counts of ready for pickup and available holds, the
+staff client now also displays the number of behind-the-desk-holds ready
+for pickup at the staff&#8217;s working location.  If no items are held behind
+the desk, this information does not display, in particular, because this
+information is useless if behind the desk holds are not supported at the
+staff&#8217;s working location.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_tpac_changes_strong"><strong>TPAC Changes</strong></h5>
+<div class="paragraph">
+<p>The system also allows patrons to set their own behind-the-desk
+pickup preferences in the TPAC settings interface.  To activate this
+feature, admins need to set the Opac Visible flag to "true" for the
+"Hold is behind Circ Desk" (circ.holds_behind_desk) user setting and
+"Behind Desk Pickup Supported" must be set to true for the patron&#8217;s
+home library.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_print_single_item_receipt_strong"><strong>Print Single Item Receipt</strong></h5>
+<div class="paragraph">
+<p>This feature adds the ability to print a receipt for just a single selected
+item from the patron interface for Items Out or Lost, Claims Returned, Long
+Overdue, Has Unpaid Billings. This can be used via right-click or using the
+<em>Actions for Selected Items</em> button.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_more_user_name_fields_available_for_simplified_hold_pull_list_strong"><strong>More User Name Fields Available for Simplified Hold Pull List</strong></h5>
+<div class="paragraph">
+<p>More User Name fields are available for display in the simplified hold pull
+list interface including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>First Given Name</p>
+</li>
+<li>
+<p>Second Given Name</p>
+</li>
+<li>
+<p>Family Name</p>
+</li>
+<li>
+<p>Prefix</p>
+</li>
+<li>
+<p>Suffix</p>
+</li>
+<li>
+<p>User Alias or First Given Name</p>
+</li>
+<li>
+<p>User Alias or Display Name</p>
+</li>
+<li>
+<p>User Alias</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_changes_to_self_check_interface_strong"><strong>Changes to Self-Check Interface</strong></h5>
+<div class="paragraph">
+<p>The following improvements were made to the self-check interface:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Convert action links to buttons for increased clarity</p>
+</li>
+<li>
+<p>Convert dashed fieldsets to gradient backed bubbles for depth</p>
+</li>
+<li>
+<p>Color line-item table headers to distinguish from actual line-items</p>
+</li>
+<li>
+<p>Color logo background for increased contrast</p>
+</li>
+<li>
+<p>Larger input box</p>
+</li>
+<li>
+<p>Background on prompts to distinguish from logo background</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_different_styles_for_long_overdue_lost_items_in_billing_interface_strong"><strong>Different Styles for Long Overdue Lost Items in Billing Interface</strong></h5>
+<div class="paragraph">
+<p>Lost or Long Overdue circulations that have not yet been returned will appear
+in the patron&#8217;s list of billed transactions styled differently from other
+not-yet-returned items.</p>
+</div>
+<div class="paragraph">
+<p>The interface will also display a helpful message to staff indicating what
+colors map to what types of circulations.</p>
+</div>
+<div class="paragraph">
+<p>The default colors are maroon for Lost items and orange for Long Overdue items.</p>
+</div>
+<div class="paragraph">
+<p>To change the colors, modify circ.css. To change the language for the hint,
+modify lang.dtd.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_checkout_trim_whitespace_from_beginning_and_end_of_barcode_strong"><strong>Checkout: Trim whitespace from beginning and end of barcode</strong></h5>
+<div class="paragraph">
+<p>In checkout, when pasting a barcode into the lookup field, one may accidentally
+include spaces or tabs in the beginning or end of the barcode string. Trim
+those away to avoid potential mis-scans.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_wrong_shelf_holds_in_clearable_shelf_expired_holds_list_strong"><strong>Wrong-Shelf Holds in Clearable Shelf-Expired Holds List</strong></h5>
+<div class="paragraph">
+<p>The following changes were made to the <em>Browse Holds Shelf</em> interface:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Change the staff client <em>View Shelf-Expired Holds</em> action label to <em>View
+Clearable Holds</em>.</p>
+</li>
+<li>
+<p>When <em>View Clearable Holds</em> is selected, show wrong-shelf holds in addition
+to shelf-expired and canceled holds.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_client">8.2.4. Client</h4>
+<div class="sect4">
+<h5 id="__strong_customize_items_out_display_for_lost_etc_strong"><strong>Customize Items Out Display for Lost, etc.</strong></h5>
+<div class="paragraph">
+<p>Items which are LOST, LONGOVERDUE, or CLAIMSRETURNED may now be displayed
+in the top/main list of circulations instead of the bottom list in the
+staff client patron Items Out interface.  Similarly, such items can be
+removed from the display once the items are checked in even if the
+transaction is still open (fines are owed, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Apart from organization, this has two additional effects:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If all 3 types are hidden once checked in, the interface becomes a true
+items out interface, instead of a combination of items out and
+special circumstance checked-in circs.</p>
+</li>
+<li>
+<p>If, in addition, all types are configured to be displayed in the top
+list, the bottom list is hidden from the UI (since nothing would display
+there), which creates more screen space for the main items out list.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_new_library_settings_strong_2"><strong>New Library Settings</strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Items Out Long-Overdue display setting (ui.circ.items_out.longoverdue)</p>
+</li>
+<li>
+<p>Items Out Lost display setting (ui.circ.items_out.lost)</p>
+</li>
+<li>
+<p>Items Out Claims Returned display setting (ui.circ.items_out.claimsreturned)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The value for each is a numeric code, describing which list the circulation
+should appear while checked out and whether the circulation should continue
+to appear in the bottom list, when checked in, regardless of the state of
+the transaction.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1 = top list, then bottom list</p>
+</li>
+<li>
+<p>2 = bottom list, then bottom list</p>
+</li>
+<li>
+<p>5 = top list, then do not display</p>
+</li>
+<li>
+<p>6 = bottom list, then do not display</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Hint: to hide the bottom list entirely, set the value for all three settings
+to <em>5</em>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_adjustable_font_size_in_the_staff_client_catalog_strong"><strong>Adjustable font size in the staff client catalog</strong></h5>
+<div class="paragraph">
+<p>When using the staff client, the font size in the catalog can now be
+increased/decreased by using the CTRL key with + (to increase), with - (to
+decrease), and with 0 (to restore default font size). Font sizes can persist
+via a setting in user preferences.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_standalone_mode_shortcut_strong"><strong>Standalone Mode Shortcut</strong></h5>
+<div class="paragraph">
+<p>The Evergreen installer now includes a shortcut that launches the staff client
+directly into standalone (offline) mode.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_user_setting_defaults_strong"><strong>User Setting Defaults</strong></h5>
+<div class="paragraph">
+<p>For use during Patron Registration, we can now supply default values for User
+Settings, under <em>Admin</em> &#8594; <em>Server Administration</em> &#8594; <em>User Setting Types</em>.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_opac_3">8.2.5. OPAC</h4>
+<div class="sect4">
+<h5 id="__strong_added_content_by_record_id_strong"><strong>Added Content by Record ID</strong></h5>
+<div class="paragraph">
+<p>Traditionally, Evergreen has supported Added Content lookups by ISBN
+only, or (more recently) by one of ISBN or UPC.</p>
+</div>
+<div class="paragraph">
+<p>This enhancement adds support for Added Content lookups by record
+ID, while still supporting the previous URL format for lookups by
+ISBN.</p>
+</div>
+<div class="paragraph">
+<p>The JSPAC and TPAC skins, as well as the web-based Self Checkout
+interface templates are updated to use jacket images / cover art by
+record ID by default.</p>
+</div>
+<div class="paragraph">
+<p>By using record identifiers, the Added Content handler has the
+opportunity to examine additional identifiers in the bib record.
+Currently, these include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ISBN</p>
+</li>
+<li>
+<p>UPC</p>
+</li>
+<li>
+<p>ISSN</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Currently, only the OpenILS::WWW::AddedContent::Syndetic provider
+makes use of the new identifiers.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_local_content_overrides_strong"><strong>Local Content Overrides</strong></h5>
+<div class="paragraph">
+<p>Just as with ISBN lookups, there is support for local overrides in
+the form of a file created on disk which short-circuits any external
+Added Content lookup.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_apache_configuration_strong"><strong>Apache Configuration</strong></h5>
+<div class="paragraph">
+<p>The example Apache configs have been updated to support serving
+blank.png when added content jacket URLs return a 404. This prevents
+"broken image" placeholders in browsers, without requiring a
+Javascript onerror handler on each img tag.</p>
+</div>
+<div class="paragraph">
+<p>The changes are as follows:</p>
+</div>
+<div class="paragraph">
+<p>In the eg.conf VirtualHost declaration for SSL, add:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-conf" data-lang="conf">SSLProxyEngine on # required for ErrorDocument 404 on SSL connections</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the eg_vhost.conf file, add:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-conf" data-lang="conf">&lt;Location /opac/extras/ac/jacket&gt;
+        ErrorDocument 404 /opac/images/blank.png
+&lt;/Location&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_bib_record_browser_with_linked_authorities_strong"><strong>Bib record browser with linked authorities</strong></h5>
+<div class="paragraph">
+<p>This feature provides a patron-oriented OPAC interface for browsing
+bibliographic records.</p>
+</div>
+<div class="paragraph">
+<p>Users choose to browse by Author, Title, Subject, or Series. They then
+enter a browse term, and the nearest match from a left-anchored search
+on the headings extracted for browse purposes will be displayed in a
+typical backwards/forwards paging display. Headings link to search
+results pages showing the related records. If the browse heading is
+linked to any authority records, and if any <strong>other</strong> authority records
+point to those with "See also" or other non-main entry headings, those
+alternative headings are displayed linked to a search results page
+showing related bib records related to the alternate heading.</p>
+</div>
+<div class="paragraph">
+<p>The counts of holdings displayed next to headings from bibliographic
+records are subject to the same visibility tests as search. This means
+that the org unit (and copy location group) dropdown on the browse
+interface affects counts, and it further means that whether or not
+you&#8217;re looking at the browse interface through the staff client makes a
+difference.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_configuration_considerations_for_site_administrators_strong"><strong>Configuration considerations for site administrators</strong></h5>
+<div class="paragraph">
+<p>There are two off-by-default features that site administrators may wish
+to enable.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Quick paging links: By adding a value for the Library Setting
+<em>Paging shortcut links for OPAC Browse</em> (opac.browse.pager_shortcuts), you
+can make shortcut browsing links such as <em>'0-9 A B C D &#8230;&#8203;</em>' appear
+between the Back and Next buttons on the browse page. The set of shortcuts
+should be chosen based on the languages in use at your site, but a
+reasonable value for English might be the string
+"*0-9*ABCDEFGHIJKLMNOPQRSTUVWXYZ", which will yield a link for 0-9 and one
+for each letter A-Z.  The use of asterisks in the string group a shortcut
+whose label is more than a single letter in length.  Such longer shortcuts
+have the multi-character string for the shortcut label, and the link just
+goes to the first heading matching the first character of the label.  The
+letters not enclosed in asterisks just lead to individual letter shortcuts.</p>
+</li>
+<li>
+<p>There is a global flag by the name <em>Map of search classes to regular
+expressions to warn user about leading articles</em>
+(opac.browse.warnable_regexp_per_class) to control what leading
+articles in users' entered browse terms trigger a warning about how
+it might be better to search for "Rolling Stones" instead of "The
+Rolling Stones" (or whatever). This is off by default, but can be
+enabled if it suits your catalog, and can even be customized per
+search class (author, title, series, subject).</p>
+</li>
+<li>
+<p>Also, by default, authors are indexed for browse in such a way that
+relator roles like "creator" are dropped off the end of their headings.
+This was an aesthetic choice. If a site wanted to display those kinds
+of terms, they would update the <em>config.metabib_field</em> table in
+the database, setting <em>browse_xpath</em> to NULL where <em>field_class</em> =
+<em>'author</em>' and <em>browse_field</em> is true.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_authority_enhanced_bibliographic_browse_strong"><strong>Authority-enhanced bibliographic browse</strong></h5>
+<div class="paragraph">
+<p>The Evergreen OPAC includes functionality for browsing by bibliographic terms,
+and, where those terms are controlled by authority records, for linking directly
+to the records that use other authority controlled terms that are appropriately
+linked to the browse-exposed term.  In this way, one can browse authors for
+"King, Stephen" and, when appropriate and correct cataloging has been performed,
+be presented with a browse link within the author browse list to that brings the
+user to a "Bachman, Richard" entry, assuming visible bibliographic records are
+indeed attached to both records. Likewise, when browsing for "Bachman,
+Richard", users will be presented with a browse link leading to the "King,
+Stephen" browse location.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, any unused but inter-authority-linked terms will appear in the
+browse list if the linked heading is in use by bibliographic records.  In this
+way, browsing for "Bachman, Richard" will lead the user to "King, Stephen" even
+if no bibliographic records make use of the "Bachman, Richard" heading.</p>
+</div>
+<div class="paragraph">
+<p>Linked authority records will not be exposed if neither is in use by visible
+bibliographic records.  This means that the feature will not lead to dead-end
+searches, but also means that this is not a complete authority browsing tool
+acceptable for use as such by a cataloger.  See the Manage Authorities interface
+exposed through the Staff Client for that functionality.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_support_for_conjoined_items_strong"><strong>Support for Conjoined Items</strong></h5>
+<div class="paragraph">
+<p>The catalog now supports the display of conjoined items. The "joined" titles
+will display a copy record with a link in the copy table back to the "master"
+bib. The master bib will display a set of links to individual titles.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_shelving_location_filter_strong"><strong>Shelving Location Filter</strong></h5>
+<div class="paragraph">
+<p>Filtering by shelving location is now available from the Advanced Search screen.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_linked_library_names_in_copy_details_strong"><strong>Linked library names in copy details</strong></h5>
+<div class="paragraph">
+<p>A patron may find one or more available copies of an item that they want to
+retrieve, but may not be familiar with the location, hours of operation, or
+contact information for each branch of their local library system. To enable
+the patron to quickly access information about a given library branch, the TPAC
+and KPAC can link the name of the branch in the copy details display to a URL
+associated with that branch.</p>
+</div>
+<div class="paragraph">
+<p>To set the URL for a given branch, use the <strong>Local Administration &#8594; Library
+Settings Editor</strong> and edit the <strong>Library Information URL</strong> setting for that
+branch. Any branches that do not have a library information URL setting display
+as normal text.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_ability_to_set_search_context_by_shortname_strong"><strong>Ability to set search context by shortname</strong></h5>
+<div class="paragraph">
+<p>When searching in the catalog, sites are able to set the search location by
+embedding a locg parameter in the URL. With this new features, sites will be
+able to use a branch&#8217;s shortname to set the search locations whereas
+previously, sites could only use an org unit id. This parameter is case
+insensitive.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_opac_maintenance_message_strong"><strong>OPAC Maintenance Message</strong></h5>
+<div class="paragraph">
+<p>Sites can now set a maintenance message to display in the catalog by setting
+the ctx.maintenance_message variable in config.tt2.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_my_list_enhancements_strong"><strong>My List Enhancements</strong></h5>
+<div class="paragraph">
+<p>The <em>My Lists</em> feature has the following enhancements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Improvement on current navigation for <em>My Lists</em> by displaying a page number
+and allowing for navigation by page number;</p>
+</li>
+<li>
+<p>Addition of pagination for items in a list;</p>
+</li>
+<li>
+<p>Addition of <em>My Lists Preferences</em> tab in <em>Account Preferences</em> where users
+can identify the number of lists and the number of list items that should
+display in each page;</p>
+</li>
+<li>
+<p>A prompt now displays when users select the <em>Delete List</em> button confirming
+that they really want to delete the list.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_web_based_patron_self_registration">Web-Based Patron Self-Registration</h5>
+
+</div>
+<div class="sect4">
+<h5 id="__strong_feature_summary_strong"><strong>Feature Summary</strong></h5>
+<div class="paragraph">
+<p>Patrons may now fill out a web-based form from within the TPAC to create
+pending user accounts.  The goal is to make the registration process more
+efficient by allowing the patron to provide much of the registration
+details in advance of registering with staff.</p>
+</div>
+<div class="paragraph">
+<p>Pending user accounts have no privileges.</p>
+</div>
+<div class="paragraph">
+<p>The form supports hiding fields, requiring fields, applying format
+validation, and displaying example text for selected fields by inspecting the
+relevant patron registration Library Settings.</p>
+</div>
+<div class="paragraph">
+<p>The "Request Library Card" link appears as the second default "bottom link"
+in the TPAC.</p>
+</div>
+<div class="paragraph">
+<p>If a user is logged in when clicking the register link, the logged-in
+user will be tracked as the requesting user for the pending account.
+Additionally, the home org unit and some address fields will be pre-populated
+for convenience (with the assumption that these will likely be the same for
+the pending user&#8201;&#8212;&#8201;they can, of course, be changed).  When a requesting user
+is present on the pending user, a link to the requesting user will be
+displayed within the patron registration form in the staff client.</p>
+</div>
+<div class="paragraph">
+<p>Pending patron accounts which sit unattended in the database for too long
+are purged via a regularly running (CRON) script.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_technical_details_strong"><strong>Technical Details</strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>To activate the web form and allow pending patrons to be created, set
+the <em>Allow Patron Self-Registration</em> (opac.allow_pending_user) Library
+Setting to true where appropriate.</p>
+</li>
+<li>
+<p>To purge old pending user accounts, set an interval value for the new
+<em>Patron Self_Reg Expire Interval</em> (opac.pending_user_expire_interval)
+Library Setting.</p>
+</li>
+<li>
+<p>The Library Settings to indicate show/require/regex/example for patron
+registration are loaded dynamically, so any Library Settings added in the
+future will also be honored.  Any setting matching the following format is
+used:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>ui.patron.edit.[au|aua].*.show</p>
+</li>
+<li>
+<p>ui.patron.edit.[au|aua].*.require</p>
+</li>
+<li>
+<p>ui.patron.edit.[au|aua].*.regex</p>
+</li>
+<li>
+<p>ui.patron.edit.[au|aua].*.example</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_responsive_catalog_strong"><strong>Responsive catalog</strong></h5>
+<div class="paragraph">
+<p>The design of the web catalog is more responsive, optimizing its display for
+mobile devices. Users will see the following changes to the catalog&#8217;s display
+when viewing it on a device with a small screen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Elements on the basic search page were resized to fit better on the screen.</p>
+</li>
+<li>
+<p>Results display cleanly on the search results page. Facets do not display by
+default, but a <em>Refine these results</em> button is available to retrieve facets.
+Links to <em>Place hold</em> or <em>Add to my list</em> display prominently beneath holdings
+information.</p>
+</li>
+<li>
+<p>Search boxes and filters wrap neatly on the advanced search page.</p>
+</li>
+<li>
+<p>The search bar was removed from the login and My Account pages to free up
+real estate for more relevant information.</p>
+</li>
+<li>
+<p>Navigational tabs were replaced with dropdown menus in several My Account
+screens.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_rss_links_to_full_catalog_record_strong"><strong>RSS Links to Full Catalog Record</strong></h5>
+<div class="paragraph">
+<p>Links in RSS feeds now point directly to the catalog record instead of the
+htmlholdings-full format of the record.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_sip">8.2.6. SIP</h4>
+<div class="sect4">
+<h5 id="__strong_support_sip_hold_cancellation_strong"><strong>Support SIP Hold Cancellation</strong></h5>
+<div class="paragraph">
+<p>Evergreen now supports a subset of the SIP 15/16 Holds message pair for holds
+cancellation.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>New oils_sip.xml configuration option "msg64_hold_datatype".  This
+is similar to msg64_summary_datatype, but affects holds instead of
+circulations.  When set to <em>barcode</em>, holds information will be
+delivered as a set of copy barcodes instead of title strings for patron
+info requests.  With barcodes, SIP clients can both find the title
+strings for display (via item info requests) and make subsequent
+hold-related action requests, like holds cancellation.</p>
+<div class="listingblock">
+<div class="content">
+<pre>Copies are not an ideal identifier for holds, but SIP has a limited
+vocabulary.  With copies we can (99% of the time) work to and from hold
+requests to find a reasonable data set to work on.  If a patron has
+multiple holds for the same item and wants to cancel a specific one of
+those holds, the user should use the catalog instead of SIP.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>When receiving a message 15 of with a cancellation action, find the
+newest open hold that matches the provided copy barcode and cancel the
+hold.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_return_hold_id_to_sip_strong"><strong>Return Hold ID to SIP</strong></h5>
+<div class="paragraph">
+<p>If there is a hold on a copy, Evergreen will now return to SIP a hold id to
+indicate that the copy has been captured for a hold. One possible use case for
+this feature is a scenario where a delivery vendor may be sorting copies needed
+for holds into a different bin from copies returning to their home library. The
+presence of the hold ID indicates that the copy has been captured for a hold.
+It also could use for an Automated Materials Handling (AMH) System to indicate
+that the copy is needed to fill a hold.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__strong_support_for_sip_renew_all_messages_strong"><strong>Support for SIP "Renew All" messages</strong></h5>
+<div class="paragraph">
+<p>Evergreen now supports SIP "Renew All" functionality, AKA SIP message pair
+65/66. When a 65 message is received, the SIP code collects all open
+transactions for the user and renews them all. The set of successful and
+failed renewals is returned to the caller via the SIP BM and BN fields.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_miscellaneous_2">8.2.7. Miscellaneous</h4>
+<div class="sect4">
+<h5 id="__strong_p_v_supa_goodstuff_integration_strong"><strong>P.V. SUPA GoodStuff Integration</strong></h5>
+<div class="paragraph">
+<p>There is now a "Server Add-ons" module for integrating P.V. Supa&#8217;s RFID product
+known as GoodStuff with the Evergreen staff client.</p>
+</div>
+<div class="paragraph">
+<p>To activate it, you should add the identifier "pv_supa_goodstuff" (without the
+quotes) to the list managed by the Admin&#8594;Workstation Administration&#8594;Server
+Add-ons menu action within the staff client.  You will need the
+ADMIN_SERVER_ADDON_FOR_WORKSTATION permission to do this.</p>
+</div>
+<div class="paragraph">
+<p>After doing this and clicking the Update Active Add-Ons button, the interface
+will refresh and show a GoodStuff tab in the Add-on Preferences section.  Within
+this tab you will have the option of specifying the hostname and port for the
+Goodstuff hardware. There is also an "Enabled" setting that needs to be checked.</p>
+</div>
+<div class="paragraph">
+<p>Currently three interfaces have been integrated:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Circulation &#8594; Check In Items</p>
+</li>
+<li>
+<p>Circulation &#8594; Check Out Items (where you scan the patron barcode)</p>
+</li>
+<li>
+<p>Circulation &#8594; Check Out Items (where you scan the item barcodes)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each interface gets an RFID checkbox if the "Enabled" preference has been set
+that can activate/deactivate the functionality on a per interface basis.  The
+checkbox states persist (i.e. are sticky).</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_more">8.2.8. More&#8230;&#8203;.</h4>
 <div class="admonitionblock caution">
 <table>
 <tr>
@@ -300,7 +1714,7 @@ What Else to add?
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2014-09-23 09:41:30 PDT
+Last updated 2014-09-25 16:31:49 PDT
 </div>
 </div>
 </body>

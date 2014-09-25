@@ -1,4 +1,15 @@
 Introduction to Evergreen
 -------------------------
-	Give a quick introduction to the System, what we run on, who makes up Sage/Evergreen,etc...
-	Evergreen is an Open Source Integrated Library System (ILS) that the Sage Consortium uses to 
+
+	Evergreen is an Open Source Integrated Library System (ILS) used by the Sage Library Consortium.
+	
+.Sage Staff include:
+- Systems Manager: mailto:blongwel@eou.edu[Beth Longwell] +
+- Systems Librarian: mailto:brent@hoodriverlibrary.org[Brent Mills] +
+- Cataloging Specialist: mailto:sagecat@bakerlib.org[David Sale] +
+	
+Feel free to contact Beth or Brent in regards to general Evergreen issues
+(connectivity/troubleshooting/functionality). David is available for cataloging related questions for the
+Evergreen installation and other, broader cataloging related questions.
+	
+This Documentation repository is built with http://www.methods.co.nz/asciidoc/[AsciDocs] and is based heavily upon the available official documention for the http://docs.evergreen-ils.org/[Evergreen ILS] as well as http://docs.sitka.bclibraries.ca/Sitka/current/html/[Sitka Library Consortium's] available documention. If you believe any information to be in error, or wish to see other sections further described, please get in contact with Beth or Brent.
