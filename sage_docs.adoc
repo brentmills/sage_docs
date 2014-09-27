@@ -11,7 +11,27 @@ include::module_overview.adoc[]
 
 include::getting_started.adoc[]
 
+// Push titles down one level.
+:leveloffset: 1
+
+include::getting_started/staff_client_installation.txt[]
+
+include::getting_started/system_requirements.txt[]
+
+// Return to normal title levels.
+:leveloffset: 0
+
 include::circulation_module.adoc[]
+
+// Push titles down one level.
+:leveloffset: 1
+
+include::circulation/circulating_items.txt[]
+
+include::circulation/circulation_patron_records.txt[]
+
+// Return to normal title levels.
+:leveloffset: 0
 
 include::cataloging_module.adoc[]
 
